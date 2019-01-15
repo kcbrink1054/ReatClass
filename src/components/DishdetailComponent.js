@@ -1,26 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 
-class DishDetail extends Component{
-    constructor(props){
-        super(props)
-
-    }
-    renderDish(dish){
+    function RenderDish({dish}){
         return(
             <div className="col-12 col-md-5 m-1">
                 <Card>
-                    <CardImg width="100%" src={this.props.dish.image} alt={this.props.dish.name}></CardImg>
-                        <CardBody>
-                            <CardTitle>{this.props.dish.name}</CardTitle>
-                            <CardText>{this.props.dish.description}</CardText>
-                        </CardBody>
+                    <CardImg width="100%" src={dish.image} alt={dish.name}></CardImg>
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
                 </Card>        
             </div>
             
         )
     }
-    renderComments(comments){
+    function RenderComments({comments}){
 
         const cts = comments.map((c)=>{
             return(
@@ -37,13 +32,13 @@ class DishDetail extends Component{
             </div>
         )
     }
-    render(){
-        if(this.props.dish != null){
+    const DishDetail = (props) => {
+        if(props.dish != null){
             return(
                 <div className="container">
                     <div className="row">
-                        {this.renderDish(this.props.dish)}
-                        {this.renderComments(this.props.dish.comments)}
+                        <RenderDish dish={props.dish} />
+                        <RenderComments comments={props.dish.comments}/>
                     </div>
                 </div>   
             )
@@ -52,6 +47,6 @@ class DishDetail extends Component{
         }
         
     }
-}
 
-export default DishDetail;
+
+export default DishDetail; 
