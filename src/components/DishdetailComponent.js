@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
             
         )
     }
-    function RenderComments({comments}){
+    function RenderComments({comments, addComment, dishId}){
 
         const cts = comments.map((c)=>{
             return(
@@ -48,7 +48,10 @@ import { Link } from 'react-router-dom';
                     </div>
                     <div className="row">
                         <RenderDish dish={props.dish} />
-                        <RenderComments comments={props.comments}/>
+                        <RenderComments comments={props.comments}
+                        addComment={props.addComment}
+                        dishIs={props.dish.isd}
+                        />
                     </div>
                 </div>   
             )
