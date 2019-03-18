@@ -9,7 +9,7 @@ export const ConfigureStore = () =>{
     const store = createStore(
         combineReducers({
             dishes: Dishes,
-            commwnts: Comments,
+            comments: Comments,
             promotions: Promotions,
             leaders: Leaders
         })

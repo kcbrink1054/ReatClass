@@ -1,83 +1,12 @@
 import React, { Component } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, Col, Row, Label } from 'reactstrap';
 import { LocalForm, Control, Errors } from 'react-redux-form';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem, Button, Modal, ModalHeader, ModalBody, Col, Row, Label } from 'reactstrap';
-import { Link } from 'react-router-dom';
 
-function RenderDish({dish}){
-        return(
-            <div className="col-12 col-md-5 m-1">
-                <Card>
-                    <CardImg width="100%" src={dish.image} alt={dish.name}></CardImg>
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>        
-            </div>
-            
-        )
-    }
-    function toggleModal(){
-
-    }
-    function RenderComments({comments, addComment, dishId}){
-
-        const cts = comments.map((c)=>{
-            return(
-                    <div className="">
-                        <div className="m-1">{c.comment}</div>
-                        <div>--{c.author}, {new Intl.DateTimeFormat('en-us',{year: 'numeric',month: 'short', day:'2-digit'}).format(new Date(Date.parse(c.date)))}</div>
-                    </div>                
-            )
-        });
-        return(
-            <div className="col-12 col-md-5 m-1">
-                <h2>Comments</h2>
-                { cts }
-                <CommentForm
-                dishId={dishId}
-                addComment={addComment}
-                />
-            </div>
-        )
-    }
-    const DishDetail = (props) => {
-        if(props.dish != null){
-            return(
-                <div className="container">
-                    <div className="row">
-                        <Breadcrumb>
-                            <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
-                            <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-                        </Breadcrumb>
-                        <div className="col-12">
-                            <h3>{props.dish.name}</h3>
-                            <hr/>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <RenderDish dish={props.dish} />
-                        <RenderComments comments={props.comments}
-                        addComment={props.addComment}
-                        dishId={props.dish.id}
-                        />
-                        
-                    </div>
-                    
-                </div>   
-            )
-        } else{
-            return(<div></div>)
-        }
-        
-    }
-
-    
 const maxLength = (len) => (val) => !(val) || (val.length <= len)
 const minLength = (len) => (val) => (val) && (val.length >= len)
 const required = (val) => val && val.length;
 
-class CommentForm extends Component{
+export default class CommentForm extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -92,8 +21,11 @@ class CommentForm extends Component{
         })
     }
     handleSubmit(values){
-        this.toggleModal()
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        alert(JSON.stringify(values))
+        console.log(JSON.stringify(values))
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        })
     }
 
     render(){
@@ -131,11 +63,11 @@ class CommentForm extends Component{
                                 <Label md={12}>Your Name</Label>
                                 <Col md={12}>
                                 <Control.text
-                                    model=".author"
+                                    model=".yourname"
                                     className="form-control"
                                     placeholder="Your Name"
-                                    id="author"
-                                    name="author"
+                                    id="yourname"
+                                    name="yourname"
                                     type="text"
                                     validators={{
                                         required, minLength:minLength(3), maxLength:maxLength(15)
@@ -143,7 +75,7 @@ class CommentForm extends Component{
                                 />
                                 <Errors
                                 className="text-danger"
-                                model=".author"
+                                model=".yourname"
                                 show="touched"
                                 messages={{
                                     required: "Required",
@@ -177,6 +109,3 @@ class CommentForm extends Component{
         );
     }
 }
-
-
-export default DishDetail; 
